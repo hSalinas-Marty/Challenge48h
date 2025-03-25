@@ -1,17 +1,58 @@
 package main
 
 import (
+	jsoncha "Challenge48h/json"
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
-	"projet/json"
+	"os"
 )
+
+// Structure pour gérer les traductions
+type Translation struct {
+	Language      string `json:"language"` // Ajout de la langue pour la gestion dans le HTML
+	Title         string `json:"title"`
+	Description   string `json:"description"`
+	WineListTitle string `json:"wineListTitle"`
+}
+
+// Fonction pour charger les traductions depuis un fichier JSON
+func loadTranslations(lang string) (Translation, error) {
+	var translations Translation
+	file, err := os.Open(fmt.Sprintf("translations/%s.json", lang))
+	if err != nil {
+		return translations, err
+	}
+	defer file.Close()
+
+	decoder := json.NewDecoder(file)
+	err = decoder.Decode(&translations)
+	if err != nil {
+		return translations, err
+	}
+	translations.Language = lang // Ajout de la langue sélectionnée
+	return translations, nil
+}
 
 // Handler pour afficher les informations du vin
 func wineHandler(w http.ResponseWriter, r *http.Request) {
+	// Déterminer la langue depuis le paramètre URL
+	lang := r.URL.Query().Get("lang")
+	if lang == "" {
+		lang = "fr" // Langue par défaut
+	}
+
+	// Charger les traductions
+	translations, err := loadTranslations(lang)
+	if err != nil {
+		http.Error(w, "Erreur lors du chargement des traductions", http.StatusInternalServerError)
+		return
+	}
+
 	// Charger les données du fichier JSON
-	vins, err := json.Donner("json/wine-data-set.json")
+	vins, err := jsoncha.Donner("json/wine-data-set.json")
 	if err != nil {
 		http.Error(w, "Erreur lors du chargement des données", http.StatusInternalServerError)
 		return
@@ -24,8 +65,17 @@ func wineHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Exécuter le template et envoyer la réponse avec les données JSON
-	err = tmpl.Execute(w, vins) // On passe les données JSON (vins) au template
+	// Passer les données de vin et de traduction au template
+	data := struct {
+		Vins         interface{}
+		Translations Translation
+	}{
+		Vins:         vins,
+		Translations: translations,
+	}
+
+	// Exécuter le template et envoyer la réponse avec les données JSON et les traductions
+	err = tmpl.Execute(w, data)
 	if err != nil {
 		http.Error(w, "Erreur lors de l'affichage de la page", http.StatusInternalServerError)
 	}
@@ -40,7 +90,6 @@ func main() {
 	http.HandleFunc("/", wineHandler)
 
 	// Lancer le serveur
-
 	fmt.Println("Serveur démarré sur http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

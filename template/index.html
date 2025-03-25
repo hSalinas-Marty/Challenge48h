@@ -3,34 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Vins</title>
-    <link rel="stylesheet" href="/static/index.css">
+    <title>{{.Translations.Title}}</title>
+    <link rel="stylesheet" href="/static/style.css?v1.0">
 </head>
 <body>
-    <h1>Liste des Vins</h1>
-    <ul>
-        <!-- Boucle pour afficher chaque vin -->
-        {{range .}}
-            <li>
-                <h2>{{.Title}}</h2>
-                <p><strong>Description:</strong> {{.Description}}</p>
-                <p><strong>Prix:</strong> {{.Price}} </p>
-                <p><strong>Variété:</strong> {{.Variety}}</p>
-                <p><strong>Région:</strong> {{.Region1}}, {{.Province}}, {{.Country}}</p>
-                {{if .TasterName}}
-                    <p><strong>Dégustateur:</strong> {{.TasterName}}</p>
-                {{end}}
-                {{if .TasterTwitter}}
-                    <p><strong>Twitter du Dégustateur:</strong> <a href="https://twitter.com/{{.TasterTwitter}}" target="_blank">{{.TasterTwitter}}</a></p>
-                {{end}}
-                {{if .Winery}}
-                    <p><strong>Cave:</strong> {{.Winery}}</p>
-                {{end}}
-                <hr>
-            </li>
-        {{else}}
-            <p>Aucun vin à afficher.</p>
-        {{end}}
-    </ul>
+    <!-- Header section -->
+    <header>
+        <h1>{{.Translations.Title}}</h1>
+        <p>{{.Translations.Description}}</p>
+        
+        <!-- Menu de sélection de langue -->
+        <form action="/" method="get">
+            <label for="lang">Choisir la langue:</label>
+            <select name="lang" id="lang" onchange="this.form.submit()">
+                <option value="fr" {{if eq .Translations.Language "fr"}}selected{{end}}>Français</option>
+                <option value="en" {{if eq .Translations.Language "en"}}selected{{end}}>English</option>
+                <option value="es" {{if eq .Translations.Language "es"}}selected{{end}}>Español</option>
+            </select>
+        </form>
+    </header>
+
+    <!-- Main content section -->
+    <main>
+        <h2>{{.Translations.WineListTitle}}</h2>
+        <ul>
+            {{range .Vins}} <!-- Cette boucle parcourt la liste des vins -->
+                <li>
+                    <h3>{{.Title}}</h3>
+                    <p><strong>{{.Translations.Description}}:</strong> {{.Description}}</p>
+                    <p><strong>Prix:</strong> {{.Price}} €</p>
+                    <p><strong>Variété:</strong> {{.Variety}}</p>
+                    <p><strong>Région:</strong> {{.Region1}}, {{.Province}}, {{.Country}}</p>
+                    {{if .TasterName}}
+                        <p><strong>Dégustateur:</strong> {{.TasterName}}</p>
+                    {{end}}
+                    {{if .TasterTwitter}}
+                        <p><strong>Twitter du Dégustateur:</strong> <a href="https://twitter.com/{{.TasterTwitter}}" target="_blank">{{.TasterTwitter}}</a></p>
+                    {{end}}
+                    {{if .Winery}}
+                        <p><strong>Cave:</strong> {{.Winery}}</p>
+                    {{end}}
+                    <hr>
+                </li>
+            {{else}}
+                <p>Aucun vin à afficher.</p>
+            {{end}}
+        </ul>
+    </main>
+
+    <!-- Footer section -->
+    <footer>
+        <p>&copy; 2025 La Cité du Vin - Tous droits réservés</p>
+        <p><a href="https://www.laciteduvin.com" target="_blank">Visitez notre site</a></p>
+    </footer>
 </body>
 </html>
