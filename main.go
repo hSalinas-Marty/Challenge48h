@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"projet/choix"
+	"projet/Fonction"
 	"projet/json"
 )
 
@@ -34,10 +34,7 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	// Route principale pour afficher la liste des vins
-	http.HandleFunc("/", indexHandler)
-	http.HandleFunc("/", winehandler.WineHandler)
-	// Route pour afficher les détails d'un vin
-	http.HandleFunc("/vin/", choix.VinDetailsHandler)
+	http.HandleFunc("/", Fonction.WineHandler)
 
 	// Lancer le serveur
 	port := ":8080"

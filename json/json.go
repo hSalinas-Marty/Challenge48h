@@ -8,6 +8,7 @@ import (
 
 // Structure pour stocker les données JSON
 type Vins struct {
+	ID            int     `json:"id"`
 	Points        int     `json:"points"`
 	Title         string  `json:"title"`
 	Description   string  `json:"description"`
@@ -26,9 +27,6 @@ type Vins struct {
 // Fonction pour lire les données JSON
 func Donner(nom string) ([]Vins, error) {
 	var vins []Vins
-
-	// Lire le fichier JSON
-	fmt.Println("Tentative de lecture du fichier:", nom) // Ajout d'un log pour vérifier le chemin
 
 	file, err := ioutil.ReadFile(nom)
 	if err != nil {
@@ -60,11 +58,9 @@ func FiltrerVins(vins []Vins) []Vins {
 			// Ajouter le vin à la liste des vins filtrés si toutes les informations sont présentes
 			vinsFiltres = append(vinsFiltres, vin)
 		} else {
-			// Log ou message pour vérifier les vins rejetés
-			fmt.Println("Vin rejeté:", vin.Title)
+
 		}
 	}
 
-	fmt.Printf("Nombre de vins après filtrage: %d\n", len(vinsFiltres)) // Affiche le nombre de vins restants après le filtrage
 	return vinsFiltres
 }
