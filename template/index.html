@@ -20,45 +20,15 @@
         </div>
     </header>
 
-    <section class="search-bar">
-        <div class="container">
-            <input type="text" id="search" placeholder="Recherchez un vin..." oninput="filterVins()">
-            <select id="category" onchange="filterVins()">
-                <option value="">Toutes les catégories</option>
-                <option value="variety">Par variété</option>
-                <option value="region">Par région</option>
-                <option value="price">Par prix</option>
-            </select>
-        </div>
-    </section>
-
     <section class="wine-selection">
         <div class="container">
-            <h2 id="vin-du-moment">Les Vins du Moment</h2>
+            <h2>Liste des Vins</h2>
             <div class="wine-list" id="wine-list">
-                <!-- Les vins du moment seront ici -->
-                {{range .VinsDuMoment}}
+                <!-- Afficher les titres des vins -->
+                {{range .}}
                 <div class="wine-item">
                     <a href="/vin/{{.ID}}">
-                        <img src="{{.ImageURL}}" alt="{{.Title}}">
                         <h3>{{.Title}}</h3>
-                        <p>{{.Description}}</p>
-                        <p><strong>Prix :</strong> {{.Price}} €</p>
-                    </a>
-                </div>
-                {{end}}
-            </div>
-
-            <h2 id="coup-de-coeur">Coup de Cœur</h2>
-            <div class="wine-list">
-                <!-- Les vins coup de cœur seront ici -->
-                {{range .CoupDeCoeur}}
-                <div class="wine-item">
-                    <a href="/vin/{{.ID}}">
-                        <img src="{{.ImageURL}}" alt="{{.Title}}">
-                        <h3>{{.Title}}</h3>
-                        <p>{{.Description}}</p>
-                        <p><strong>Prix :</strong> {{.Price}} €</p>
                     </a>
                 </div>
                 {{end}}
@@ -72,31 +42,6 @@
         </div>
     </footer>
 
-    <script>
-        function filterVins() {
-            const search = document.getElementById('search').value.toLowerCase();
-            const category = document.getElementById('category').value;
-
-            // Appliquer des filtres en fonction du texte de recherche et de la catégorie
-            const vins = document.querySelectorAll('.wine-item');
-            vins.forEach(vin => {
-                const title = vin.querySelector('h3').textContent.toLowerCase();
-                const description = vin.querySelector('p').textContent.toLowerCase();
-
-                // Appliquer le filtre sur la base de la recherche
-                if (title.includes(search) || description.includes(search)) {
-                    vin.style.display = 'block';
-                } else {
-                    vin.style.display = 'none';
-                }
-
-                // Filtrer par catégorie (par exemple, variété, région)
-                if (category && vin.dataset[category] !== search) {
-                    vin.style.display = 'none';
-                }
-            });
-        }
-    </script>
 </body>
 
 </html>

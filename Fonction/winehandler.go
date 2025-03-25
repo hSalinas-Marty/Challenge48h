@@ -4,7 +4,8 @@ import (
 	"html/template"
 	"net/http"
 	"projet/json"
-	"strconv" // Permet de convertir string en int
+	"strconv"
+	// Permet de convertir string en int
 )
 
 // Handler pour afficher la liste des vins
@@ -14,6 +15,11 @@ func WineHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "Erreur lors du chargement des données", http.StatusInternalServerError)
 		return
+	}
+
+	// Limiter à 100 vins
+	if len(vins) > 100 {
+		vins = vins[:100] // Prendre uniquement les 100 premiers vins
 	}
 
 	// Charger le template de la page d'index
@@ -34,7 +40,9 @@ func WineHandler(w http.ResponseWriter, r *http.Request) {
 func VinDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	// Extraire l'ID du vin à partir de l'URL
 	vinIDStr := r.URL.Path[len("/vin/"):]
-	vinID, err := strconv.Atoi(vinIDStr) // Convertir l'ID en int
+
+	// Convertir l'ID en int
+	vinID, err := strconv.Atoi(vinIDStr)
 	if err != nil {
 		http.Error(w, "ID de vin invalide", http.StatusBadRequest)
 		return

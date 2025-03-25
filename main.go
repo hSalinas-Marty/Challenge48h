@@ -25,7 +25,10 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Afficher la page d'index avec la liste des vins
-	tmpl.Execute(w, vins)
+	if err := tmpl.Execute(w, vins); err != nil {
+		http.Error(w, "Erreur lors du rendu du template", http.StatusInternalServerError)
+		return
+	}
 }
 
 func main() {
@@ -35,7 +38,7 @@ func main() {
 
 	// Route principale pour afficher la liste des vins
 	http.HandleFunc("/", Fonction.WineHandler)
-
+	http.HandleFunc("/vin/", Fonction.VinDetailsHandler)
 	// Lancer le serveur
 	port := ":8080"
 	fmt.Println("Serveur Go lancé sur http://localhost" + port)
