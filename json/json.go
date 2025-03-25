@@ -1,10 +1,8 @@
-package importjson
+package json
 
 import (
 	"encoding/json"
-	"html/template"
 	"io/ioutil"
-	"net/http"
 )
 
 // Structure pour stocker les données JSON
@@ -25,8 +23,8 @@ type Vins struct {
 }
 
 // Fonction pour lire les données JSON
-func Donner(nom string) (Vins, error) {
-	var vins Vins
+func Donner(nom string) ([]Vins, error) {
+	var vins []Vins
 
 	// Lire le fichier JSON
 	file, err := ioutil.ReadFile(nom)
@@ -41,24 +39,4 @@ func Donner(nom string) (Vins, error) {
 	}
 
 	return vins, nil
-}
-
-// Handler pour afficher les informations du vin
-func wineHandler(w http.ResponseWriter, r *http.Request) {
-	// Charger les données du fichier JSON
-	vins, err := Donner("data/vin.json")
-	if err != nil {
-		http.Error(w, "Erreur lors du chargement des données", http.StatusInternalServerError)
-		return
-	}
-
-	// Charger le template HTML
-	tmpl, err := template.ParseFiles("templates/vin.html")
-	if err != nil {
-		http.Error(w, "Erreur de chargement du template", http.StatusInternalServerError)
-		return
-	}
-
-	// Envoyer les données JSON au template
-	tmpl.Execute(w, vins)
 }

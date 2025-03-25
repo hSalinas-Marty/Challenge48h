@@ -3,11 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{.Title}}</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Liste des Vins</title>
+    <link rel="stylesheet" href="/static/index.css">
 </head>
 <body>
-    <h1>{{.Message}}</h1>
-    <p>Go est génial pour le développement web ! 🎉</p>
+    <h1>Liste des Vins</h1>
+    <ul>
+        <!-- Boucle pour afficher chaque vin -->
+        {{range .}}
+            <li>
+                <h2>{{.Title}}</h2>
+                <p><strong>Description:</strong> {{.Description}}</p>
+                <p><strong>Prix:</strong> {{.Price}} </p>
+                <p><strong>Variété:</strong> {{.Variety}}</p>
+                <p><strong>Région:</strong> {{.Region1}}, {{.Province}}, {{.Country}}</p>
+                {{if .TasterName}}
+                    <p><strong>Dégustateur:</strong> {{.TasterName}}</p>
+                {{end}}
+                {{if .TasterTwitter}}
+                    <p><strong>Twitter du Dégustateur:</strong> <a href="https://twitter.com/{{.TasterTwitter}}" target="_blank">{{.TasterTwitter}}</a></p>
+                {{end}}
+                {{if .Winery}}
+                    <p><strong>Cave:</strong> {{.Winery}}</p>
+                {{end}}
+                <hr>
+            </li>
+        {{else}}
+            <p>Aucun vin à afficher.</p>
+        {{end}}
+    </ul>
 </body>
 </html>
