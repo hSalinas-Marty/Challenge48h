@@ -47,13 +47,26 @@ func wineHandler(w http.ResponseWriter, r *http.Request) {
 	// Charger les traductions
 	translations, err := loadTranslations(lang)
 	if err != nil {
+		// Log the error for debugging
+		log.Printf("Erreur lors du chargement des traductions: %v", err)
 		http.Error(w, "Erreur lors du chargement des traductions", http.StatusInternalServerError)
 		return
 	}
 
+	// Charger le fichier des vins en fonction de la langue
+	var wineFile string
+	switch lang {
+	case "en":
+		wineFile = "json/wine-data-en.json"
+	default:
+		wineFile = "json/wine-data-fr.json"
+	}
+
 	// Charger les données du fichier JSON
-	vins, err := jsoncha.Donner("json/wine-data-set.json")
+	vins, err := jsoncha.Donner(wineFile)
 	if err != nil {
+		// Log the error for debugging
+		log.Printf("Erreur lors du chargement des données des vins: %v", err)
 		http.Error(w, "Erreur lors du chargement des données", http.StatusInternalServerError)
 		return
 	}
@@ -61,6 +74,8 @@ func wineHandler(w http.ResponseWriter, r *http.Request) {
 	// Charger le template HTML
 	tmpl, err := template.ParseFiles("template/index.html")
 	if err != nil {
+		// Log the error for debugging
+		log.Printf("Erreur de chargement du template: %v", err)
 		http.Error(w, "Erreur de chargement du template", http.StatusInternalServerError)
 		return
 	}
@@ -77,7 +92,10 @@ func wineHandler(w http.ResponseWriter, r *http.Request) {
 	// Exécuter le template et envoyer la réponse avec les données JSON et les traductions
 	err = tmpl.Execute(w, data)
 	if err != nil {
+		// Log the error for debugging
+		log.Printf("Erreur lors de l'affichage du template: %v", err)
 		http.Error(w, "Erreur lors de l'affichage de la page", http.StatusInternalServerError)
+		return
 	}
 }
 

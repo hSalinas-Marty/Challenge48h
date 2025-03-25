@@ -18,7 +18,6 @@
             <select name="lang" id="lang" onchange="this.form.submit()">
                 <option value="fr" {{if eq .Translations.Language "fr"}}selected{{end}}>Français</option>
                 <option value="en" {{if eq .Translations.Language "en"}}selected{{end}}>English</option>
-                <option value="es" {{if eq .Translations.Language "es"}}selected{{end}}>Español</option>
             </select>
         </form>
     </header>
@@ -30,7 +29,7 @@
             {{range .Vins}} <!-- Cette boucle parcourt la liste des vins -->
                 <li>
                     <h3>{{.Title}}</h3>
-                    <p><strong>{{.Translations.Description}}:</strong> {{.Description}}</p>
+                    <p><strong>{{$.Translations.Description}}:</strong> {{.Description}}</p> <!-- Access Translations separately -->
                     <p><strong>Prix:</strong> {{.Price}} €</p>
                     <p><strong>Variété:</strong> {{.Variety}}</p>
                     <p><strong>Région:</strong> {{.Region1}}, {{.Province}}, {{.Country}}</p>
