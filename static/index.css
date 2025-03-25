@@ -1,14 +1,114 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
-    padding: 50px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-h1 {
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
     color: #333;
 }
 
-.bloc {
-    color: red;
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header .logo {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+header nav ul {
+    list-style: none;
+    margin-top: 10px;
+}
+
+header nav ul li {
+    display: inline-block;
+    margin: 0 20px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.search-bar {
+    background-color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.search-bar input,
+.search-bar select {
+    padding: 10px;
+    margin: 10px 10px 10px 0;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.wine-selection {
+    background-color: #fff;
+    padding: 50px 0;
+}
+
+.wine-selection h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.wine-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.wine-item {
+    background-color: #fff;
+    padding: 15px;
+    width: 250px;
+    margin: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.wine-item:hover {
+    transform: scale(1.05);
+}
+
+.wine-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.wine-item h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-top: 15px;
+}
+
+.wine-item p {
+    color: #777;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer p {
+    font-size: 0.9rem;
 }

@@ -1,0 +1,67 @@
+/* Détails du vin */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #800000;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+.back-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    margin-top: 10px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+}
+
+.wine-details {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.wine-details h2 {
+    color: #333;
+}
+
+.wine-details p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.wine-details p strong {
+    color: #333;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

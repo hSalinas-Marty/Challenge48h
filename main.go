@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
+	"projet/choix"
 	"projet/json"
 )
 
-// Handler pour afficher les informations du vin
-func wineHandler(w http.ResponseWriter, r *http.Request) {
+// Handler pour afficher la liste des vins
+func indexHandler(w http.ResponseWriter, r *http.Request) {
 	// Charger les données du fichier JSON
 	vins, err := json.Donner("json/wine-data-set.json")
 	if err != nil {
@@ -17,30 +17,30 @@ func wineHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Charger le template HTML
+	// Charger le template de la page d'index
 	tmpl, err := template.ParseFiles("template/index.html")
 	if err != nil {
 		http.Error(w, "Erreur de chargement du template", http.StatusInternalServerError)
 		return
 	}
 
-	// Exécuter le template et envoyer la réponse avec les données JSON
-	err = tmpl.Execute(w, vins) // On passe les données JSON (vins) au template
-	if err != nil {
-		http.Error(w, "Erreur lors de l'affichage de la page", http.StatusInternalServerError)
-	}
+	// Afficher la page d'index avec la liste des vins
+	tmpl.Execute(w, vins)
 }
 
 func main() {
-	// Servir les fichiers statiques (CSS, images)
-	fs := http.FileServer(http.Dir("template/static"))
+	// Servir les fichiers statiques (CSS)
+	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	// Route principale
-	http.HandleFunc("/", wineHandler)
+	// Route principale pour afficher la liste des vins
+	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/", winehandler.WineHandler)
+	// Route pour afficher les détails d'un vin
+	http.HandleFunc("/vin/", choix.VinDetailsHandler)
 
 	// Lancer le serveur
-
-	fmt.Println("Serveur démarré sur http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	port := ":8080"
+	fmt.Println("Serveur Go lancé sur http://localhost" + port)
+	http.ListenAndServe(port, nil)
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Vin</title>
+    <link rel="stylesheet" href="/static/details_vins.css">
+</head>
+<body>
+    <header>
+        <h1>Détails du Vin</h1>
+        <a href="/" class="back-link">Retour à la liste des vins</a>
+    </header>
+
+    <main>
+        <section class="wine-details">
+            <h2>{{.Title}}</h2>
+            <p><strong>Description:</strong> {{.Description}}</p>
+            <p><strong>Prix:</strong> {{.Price}} €</p>
+            <p><strong>Variété:</strong> {{.Variety}}</p>
+            <p><strong>Région:</strong> {{.Region1}}, {{.Province}}, {{.Country}}</p>
+            {{if .TasterName}}
+                <p><strong>Dégustateur:</strong> {{.TasterName}}</p>
+            {{end}}
+            {{if .TasterTwitter}}
+                <p><strong>Twitter du Dégustateur:</strong> <a href="https://twitter.com/{{.TasterTwitter}}" target="_blank">{{.TasterTwitter}}</a></p>
+            {{end}}
+            {{if .Winery}}
+                <p><strong>Cave:</strong> {{.Winery}}</p>
+            {{end}}
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Vins de Bordeaux</p>
+    </footer>
+</body>
+</html>
