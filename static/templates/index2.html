@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Vins</title>
+</head>
+<body>
+    <!-- Formulaire de préférences utilisateur -->
+    <h2>Choisissez vos préférences</h2>
+    <form method="POST" action="/">
+        <label for="wine-type">Quel type de vin aimez-vous ?</label><br>
+        <select id="wine-type" name="wine_type">
+            <option value="red">Vin rouge</option>
+            <option value="white">Vin blanc</option>
+            <option value="rose">Vin rosé</option>
+            <option value="sparkling">Vin pétillant</option>
+        </select><br><br>
+
+        <label for="price-range">Quel est votre budget ? (en $)</label><br>
+        <input type="number" id="price-range" name="price_range" placeholder="Budget en $"><br><br>
+
+        <label for="region">Préférez-vous une région spécifique ?</label><br>
+        <input type="text" id="region" name="region" placeholder="Ex : Napa Valley, Rhône"><br><br>
+
+        <button type="submit">Appliquer les filtres</button>
+    </form>
+</body>
+</html>

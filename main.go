@@ -1,46 +1,22 @@
+// main.go
 package main
 
 import (
-	"fmt"
-	"html/template"
 	"log"
 	"net/http"
-	"projet/json"
+	"projet/server"
 )
 
-// Handler pour afficher les informations du vin
-func wineHandler(w http.ResponseWriter, r *http.Request) {
-	// Charger les données du fichier JSON
-	vins, err := json.Donner("json/wine-data-set.json")
-	if err != nil {
-		http.Error(w, "Erreur lors du chargement des données", http.StatusInternalServerError)
-		return
-	}
-
-	// Charger le template HTML
-	tmpl, err := template.ParseFiles("template/index.html")
-	if err != nil {
-		http.Error(w, "Erreur de chargement du template", http.StatusInternalServerError)
-		return
-	}
-
-	// Exécuter le template et envoyer la réponse avec les données JSON
-	err = tmpl.Execute(w, vins) // On passe les données JSON (vins) au template
-	if err != nil {
-		http.Error(w, "Erreur lors de l'affichage de la page", http.StatusInternalServerError)
-	}
-}
+const port = ":1717"
 
 func main() {
-	// Servir les fichiers statiques (CSS, images)
-	fs := http.FileServer(http.Dir("template/static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
-	// Route principale
-	http.HandleFunc("/", wineHandler)
+	http.HandleFunc("/", server.WineHandler) // Route de la page d'accueil
 
-	// Lancer le serveur
-
-	fmt.Println("Serveur démarré sur http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println("Démarrage du serveur http://localhost", port)
+	err := http.ListenAndServe(port, nil) // Lancer le serveur sur le port 8080
+	if err != nil {
+		log.Fatal("Erreur lors du démarrage du serveur : ", err)
+	}
 }

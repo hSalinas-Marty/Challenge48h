@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats de Recherche</title>
+</head>
+<body>
+    <h2>Résultats de Recherche</h2>
+    
+    {{if .}}
+        <ul>
+        {{range .}}
+            <li>
+                <strong>{{.Title}}</strong><br>
+                Description: {{.Description}}<br>
+                Détails: {{.DetailedDescription}}<br>
+                Prix: ${{.Price}}<br>
+            </li>
+        {{end}}
+        </ul>
+    {{else}}
+        <p>Aucun vin ne correspond à votre recherche.</p>
+    {{end}}
+
+</body>
+</html>

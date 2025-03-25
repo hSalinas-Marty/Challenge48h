@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Vins</title>
+</head>
+<body>
+    <h2>Liste des Vins</h2>
+
+    <div id="wine-list">
+        {{range .}}
+        <div class="wine">
+            <h3>{{.Title}}</h3>
+            <p><strong>Points:</strong> {{.Points}}</p>
+            <p><strong>Description:</strong> {{.Description}}</p>
+            {{if .TasterName}}
+                <p><strong>Taster:</strong> {{.TasterName}} (<a href="https://twitter.com/{{.TasterTwitter}}" target="_blank">{{.TasterTwitter}}</a>)</p>
+            {{else}}
+                <p><strong>Taster:</strong> Non spécifié</p>
+            {{end}}
+            <p><strong>Prix:</strong> ${{.Price}}</p>
+            {{if .Designation}}
+                <p><strong>Désignation:</strong> {{.Designation}}</p>
+            {{end}}
+            <p><strong>Variété:</strong> {{.Variety}}</p>
+            <p><strong>Région:</strong> {{.Region1}}, {{.Province}}, {{.Country}}</p>
+            {{if .Region2}}
+                <p><strong>Autre région:</strong> {{.Region2}}</p>
+            {{end}}
+            <p><strong>Vignoble:</strong> {{.Winery}}</p>
+            <img src="{{.ImageURL}}" alt="{{.Title}}" width="300">
+            <h4>Description détaillée</h4>
+            <p>{{.DetailedDescription}}</p>
+        </div>
+        {{end}}
+    </div>
+</body>
+</html>
