@@ -1,17 +1,44 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rechercher des Vins</title>
+    <title>Wine Search</title>
 </head>
 <body>
-    <h2>Rechercher des Vins</h2>
-    <form method="POST" action="/search">
-        <label for="query">Entrez votre recherche :</label><br>
-        <input type="text" id="query" name="query" placeholder="Recherchez par mot-clé ou description"><br><br>
 
-        <button type="submit">Rechercher</button>
+    <h1>Search for a Wine</h1>
+    
+    <form action="/search" method="GET">
+        <label for="query">Search:</label>
+        <input type="text" id="query" name="query" placeholder="Search by title, description, etc.">
+        <button type="submit">Search</button>
     </form>
+
+    {{if .Query}}
+        <h2>Search Results for "{{.Query}}":</h2>
+        {{if .MatchedWines}}
+            <ul>
+                {{range .MatchedWines}}
+                    <li>
+                        <strong>{{.Title}}</strong><br>
+                        <em>{{.Variety}} - {{.Region1}}</em><br>
+                        
+                        {{if .Region2}}<strong>Region 2:</strong> {{.Region2}}<br>{{end}}
+                        {{if .Country}}<strong>Country :</strong> {{.Country}}<br>{{end}}
+                        {{if .TasterName}}<strong>Taster:</strong> {{.TasterName}}<br>{{end}}
+                        {{if .TasterTwitter}}<strong>Twitter:</strong> <a href="https://twitter.com/{{.TasterTwitter}}" target="_blank">@{{.TasterTwitter}}</a><br>{{end}}
+
+                        <p>{{.DetailedDescription}}</p>
+                        <p><strong>Price:</strong> ${{.Price}}</p>
+                        <p><a href="{{.ImageURL}}" target="_blank">More Info</a></p>
+                    </li>
+                {{end}}
+            </ul>
+        {{else}}
+            <p>No results found matching your query.</p>
+        {{end}}
+    {{end}}
+
 </body>
 </html>
