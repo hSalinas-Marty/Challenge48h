@@ -14,21 +14,42 @@
             <h1 class="logo">Les Vins de Bordeaux</h1>
             <nav>
                 <ul>
+                    <li><a href="#">Accueil</a></li>
+                    <li><a href="#">Nos Vins</a></li>
+                    <li><a href="#">À propos</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
+    <section class="search-bar">
+        <div class="container">
+            <h2>Explorez notre sélection de vins</h2>
+            <input type="text" id="search" placeholder="Recherchez un vin..." oninput="filterVins()">
+            <div class="filters">
+                <select id="category" onchange="filterVins()">
+                    <option value="">Toutes les catégories</option>
+                    <option value="variety">Par variété</option>
+                    <option value="region">Par région</option>
+                    <option value="price">Par prix</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
     <section class="wine-selection">
         <div class="container">
-            <h2>Liste des Vins</h2>
-            <div class="wine-list" id="wine-list">
-                <!-- Afficher les titres des vins -->
-                {{range .}}
+            <h2>Les Vins du Moment</h2>
+            <div class="wine-list">
+                <!-- Les vins du moment seront ici -->
+                {{range .VinsDuMoment}}
                 <div class="wine-item">
                     <a href="/vin/{{.ID}}">
+                        <img src="{{.ImageURL}}" alt="{{.Title}}">
                         <h3>{{.Title}}</h3>
+                        <p>{{.Description}}</p>
+                        <p><strong>Prix :</strong> {{.Price}} €</p>
                     </a>
                 </div>
                 {{end}}
@@ -36,12 +57,14 @@
         </div>
     </section>
 
+    
+
     <footer>
         <div class="container">
             <p>&copy; 2025 Les Vins de Bordeaux. Tous droits réservés.</p>
+            <p>Contactez-nous à <a href="mailto:contact@lesvinsdebordeaux.com">contact@lesvinsdebordeaux.com</a></p>
         </div>
     </footer>
 
+   
 </body>
-
-</html>

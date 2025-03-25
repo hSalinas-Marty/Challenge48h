@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"projet/Fonction"
+	"projet/fonction"
 	"projet/json"
 )
 
@@ -37,8 +37,8 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	// Route principale pour afficher la liste des vins
-	http.HandleFunc("/", Fonction.WineHandler)
-	http.HandleFunc("/vin/", Fonction.VinDetailsHandler)
+	http.HandleFunc("/", fonction.WineHandler)
+	http.HandleFunc("/vin/", fonction.VinDetailsHandler)
 	// Lancer le serveur
 	port := ":8080"
 	fmt.Println("Serveur Go lancé sur http://localhost" + port)

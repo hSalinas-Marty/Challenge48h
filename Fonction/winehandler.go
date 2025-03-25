@@ -1,38 +1,47 @@
-package Fonction
+package fonction
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"projet/json"
 	"strconv"
-	// Permet de convertir string en int
 )
 
-// Handler pour afficher la liste des vins
 func WineHandler(w http.ResponseWriter, r *http.Request) {
 	// Charger les données du fichier JSON
 	vins, err := json.Donner("json/wine-data-set.json")
 	if err != nil {
+		// Lorsque tu utilises http.Error, ça envoie automatiquement un WriteHeader
 		http.Error(w, "Erreur lors du chargement des données", http.StatusInternalServerError)
-		return
+		return // Ne fais pas de WriteHeader manuellement après
 	}
 
-	// Limiter à 100 vins
-	if len(vins) > 100 {
-		vins = vins[:100] // Prendre uniquement les 100 premiers vins
+	// Sélectionner un sous-ensemble des vins pour "Les Vins du Moment" (par exemple, les 5 premiers)
+	var vinsDuMoment []json.Vins
+	for i := 0; i < 5 && i < len(vins); i++ {
+		vinsDuMoment = append(vinsDuMoment, vins[i])
 	}
 
-	// Charger le template de la page d'index
+	// Afficher les vins du moment dans la console pour vérifier
+	fmt.Println(vinsDuMoment)
+
+	// Charger le template HTML de la page d'index
 	tmpl, err := template.ParseFiles("template/index.html")
 	if err != nil {
 		http.Error(w, "Erreur de chargement du template", http.StatusInternalServerError)
 		return
 	}
 
-	// Afficher la page d'index avec la liste des vins
-	err = tmpl.Execute(w, vins)
+	// Passer les vins du moment et les autres données au template
+	err = tmpl.Execute(w, struct {
+		VinsDuMoment []json.Vins
+	}{
+		VinsDuMoment: vinsDuMoment, // Vins du moment
+	})
 	if err != nil {
 		http.Error(w, "Erreur lors du rendu du template", http.StatusInternalServerError)
+		return // Ne fais pas d'autres appels WriteHeader après
 	}
 }
 
@@ -73,13 +82,14 @@ func VinDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	// Charger le template HTML de la page de détails
 	tmpl, err := template.ParseFiles("template/details_vins.html")
 	if err != nil {
-		http.Error(w, "Erreur de chargement du template", http.StatusInternalServerError)
+		http.Error(w, "Erreur de chargement du template Charger le template HTML de la page de détails", http.StatusInternalServerError)
 		return
 	}
 
 	// Exécuter le template avec les données du vin spécifique
 	err = tmpl.Execute(w, vinDetail)
 	if err != nil {
-		http.Error(w, "Erreur lors du rendu du template", http.StatusInternalServerError)
+		http.Error(w, "Erreur lors du rendu du template Exécuter le template avec les données du vin spécifique", http.StatusInternalServerError)
+		return
 	}
 }
