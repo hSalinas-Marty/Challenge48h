@@ -1,6 +1,13 @@
 {
-    "title": "The City of Wine",
-    "description": "Discover our selection of wines.",
-    "wineListTitle": "Wine List"
-  }
+  "language": "en",
+  "title": "The City of Wine",
+  "description": "Description",
+  "wineListTitle": "Wine List",
+  "prices": "Price",
+  "variety": "Variety",
+  "region": "Region",
+  "taster": "Taster",
+  "twitter": "Taster's Twitter",
+  "winery": "Winery"
+}
   

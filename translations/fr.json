@@ -1,7 +1,14 @@
 {
+  "language": "fr",
   "title": "La Cité du Vin",
-  "description": "Découvrez notre sélection de vins.",
-  "wineListTitle": "Liste des Vins"
+  "description": "Description",
+  "wineListTitle": "Liste des Vins",
+  "prices": "Prix",
+  "variety": "Variété",
+  "region": "Région",
+  "taster": "Dégustateur",
+  "twitter": "Twitter du Dégustateur",
+  "winery": "Cave"
 }
 
   

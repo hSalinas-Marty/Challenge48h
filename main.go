@@ -16,6 +16,12 @@ type Translation struct {
 	Title         string `json:"title"`
 	Description   string `json:"description"`
 	WineListTitle string `json:"wineListTitle"`
+	Prices        string `json:"prices"`
+	Variety       string `json:"variety"`
+	Region        string `json:"region"`
+	Taster        string `json:"taster"`
+	Twitter       string `json:"twitter"`
+	Winery        string `json:"winery"`
 }
 
 // Fonction pour charger les traductions depuis un fichier JSON
