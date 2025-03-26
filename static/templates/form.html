@@ -1,44 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wine Search</title>
+    <title>Quiz des Vins</title>
 </head>
 <body>
+    <h1>Choisissez vos vins</h1>
+    <form method="POST" action="/">
+        <label for="type">Type de vin :</label>
+        <select name="type" id="type">
+          <option value="0">Tous</option>
+          <option value="1">Rouge</option>
+          <option value="2">Blanc</option>
+          <option value="3">Rosé</option>
+          <option value="4">Pétillant</option>
+          <option value="5">Dessert</option>
+        </select>
+        <br>
+      
+        <label for="country">Pays :</label>
+        <input type="text" name="country" id="country">
+        <br>
+      
+        <label for="price">Plage de prix :</label>
+        <select name="price" id="price">
+            <option value="0">Tous</option>
+          <option value="1">Moins de 50€</option>
+          <option value="2">50€ - 150€</option>
+          <option value="3">Plus de 150€</option>
+        </select>
+        <br>
+      
+        <input type="submit" value="Filtrer">
+      </form>
+      
 
-    <h1>Search for a Wine</h1>
-    
-    <form action="/search" method="GET">
-        <label for="query">Search:</label>
-        <input type="text" id="query" name="query" placeholder="Search by title, description, etc.">
-        <button type="submit">Search</button>
-    </form>
-
-    {{if .Query}}
-        <h2>Search Results for "{{.Query}}":</h2>
-        {{if .MatchedWines}}
-            <ul>
-                {{range .MatchedWines}}
-                    <li>
-                        <strong>{{.Title}}</strong><br>
-                        <em>{{.Variety}} - {{.Region1}}</em><br>
-                        
-                        {{if .Region2}}<strong>Region 2:</strong> {{.Region2}}<br>{{end}}
-                        {{if .Country}}<strong>Country :</strong> {{.Country}}<br>{{end}}
-                        {{if .TasterName}}<strong>Taster:</strong> {{.TasterName}}<br>{{end}}
-                        {{if .TasterTwitter}}<strong>Twitter:</strong> <a href="https://twitter.com/{{.TasterTwitter}}" target="_blank">@{{.TasterTwitter}}</a><br>{{end}}
-
-                        <p>{{.DetailedDescription}}</p>
-                        <p><strong>Price:</strong> ${{.Price}}</p>
-                        <p><a href="{{.ImageURL}}" target="_blank">More Info</a></p>
-                    </li>
-                {{end}}
-            </ul>
-        {{else}}
-            <p>No results found matching your query.</p>
+    <h2>Vins disponibles :</h2>
+    <ul>
+        {{range .}}
+        <li>{{.Title}} ({{.TypeStr}}) - {{.Price}}€</li>
         {{end}}
-    {{end}}
-
+    </ul>
 </body>
 </html>
